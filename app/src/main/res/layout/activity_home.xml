@@ -52,14 +52,14 @@
         android:layout_marginTop="100dp"
         android:textAlignment="center"
         android:textAllCaps="true"
+        android:textColor="#4CA883"
         android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="#4CA883"/>
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerPokemon"
         android:layout_width="match_parent"
-        android:layout_height="559dp"
+        android:layout_height="555dp"
         android:layout_gravity="bottom" />
 
 

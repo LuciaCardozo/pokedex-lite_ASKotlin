@@ -15,9 +15,8 @@ import io.swagger.client.apis.PokemonApi
 import io.swagger.client.infrastructure.ClientException
 import io.swagger.client.infrastructure.ServerException
 import io.swagger.client.models.Pokemon
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.android.awaitFrame
 
 
 class Home : AppCompatActivity() {
@@ -32,24 +31,23 @@ class Home : AppCompatActivity() {
         val username = intent.getStringExtra("username")
         binding.textUsername.text = "Welcome $username"
         val userId = intent.getStringExtra("userId")
-        getPokemon(userId.toString(),listPokemon)
-        Thread.sleep(1000)
-        println(listPokemon)
-        initRecyclerView(listPokemon)
-
+        getPokemon(userId.toString())
     }
 
-    private fun getPokemon(userId:String, list: MutableList<Pokemon>){
-        CoroutineScope(Dispatchers.IO).launch {
+    private fun getPokemon(userId:String){
+       CoroutineScope(Dispatchers.IO).launch {
             val apiInstancePokemon = PokemonApi()
             try {
-                val result: Array<Pokemon> = apiInstancePokemon.pokemonGet(userId)
-                for (poke in result) {
-                    //this validation is not necessary but in my case it's
-                        // because I have a null in the list =D
-                    if (poke != null) {
-                        list.add(poke)
+                val result =  apiInstancePokemon.pokemonGet(userId)
+
+                    for (pokemon in result){
+                        if(pokemon != null){
+                            listPokemon.add(pokemon)
+                        }
                     }
+                //Se ejecuta en el hilo principal :)
+                runOnUiThread{
+                    initRecyclerView(listPokemon)
                 }
             } catch (e: ClientException) {
                 println("4xx response calling PokemonApi#pokemonGet")
@@ -60,6 +58,7 @@ class Home : AppCompatActivity() {
             }
         }
     }
+
 
     private fun initRecyclerView(list:List<Pokemon>){
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerPokemon)

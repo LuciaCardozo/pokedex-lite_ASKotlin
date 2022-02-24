@@ -26,7 +26,7 @@ class PokemonApi(basePath: kotlin.String = "https://testing.certant.com/pokedex-
      * @return kotlin.Array<Pokemon>
      */
     @Suppress("UNCHECKED_CAST")
-    fun pokemonGet(userId: String): Array<Pokemon> {
+     fun pokemonGet(userId: String): Array<Pokemon> {
         val localVariableQuery: MultiValueMap = mapOf("userId" to listOf("$userId"))
         val localVariableConfig = RequestConfig(
                 RequestMethod.GET,

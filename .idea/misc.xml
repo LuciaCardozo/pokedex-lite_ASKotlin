@@ -11,6 +11,14 @@
         <entry key="..\:/Users/lcardozo/AndroidStudioProjects/app/src/main/res/layout/item_pokemon.xml" value="0.25" />
         <entry key="..\:/Users/lcardozo/AndroidStudioProjects/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.109" />
         <entry key="..\:/Users/lcardozo/AndroidStudioProjects/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.109" />
+        <entry key="..\:/Users/lcardozo/AndroidStudioProjects/pokedex/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.214" />
+        <entry key="..\:/Users/lcardozo/AndroidStudioProjects/pokedex/app/src/main/res/drawable/ic_launcher_background.xml" value="0.214" />
+        <entry key="..\:/Users/lcardozo/AndroidStudioProjects/pokedex/app/src/main/res/drawable/splash_pokemon.xml" value="0.2105" />
+        <entry key="..\:/Users/lcardozo/AndroidStudioProjects/pokedex/app/src/main/res/layout/activity_detail.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/lcardozo/AndroidStudioProjects/pokedex/app/src/main/res/layout/activity_home.xml" value="0.16799999999999998" />
+        <entry key="..\:/Users/lcardozo/AndroidStudioProjects/pokedex/app/src/main/res/layout/activity_main.xml" value="0.15534420289855072" />
+        <entry key="..\:/Users/lcardozo/AndroidStudioProjects/pokedex/app/src/main/res/layout/item_pokemon_ability.xml" value="0.264" />
+        <entry key="..\:/Users/lcardozo/AndroidStudioProjects/pokedex/app/src/main/res/layout/progress_bar_loading.xml" value="0.2" />
       </map>
     </option>
   </component>

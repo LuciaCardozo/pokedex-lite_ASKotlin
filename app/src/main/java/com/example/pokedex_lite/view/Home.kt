@@ -16,7 +16,6 @@ import io.swagger.client.infrastructure.ClientException
 import io.swagger.client.infrastructure.ServerException
 import io.swagger.client.models.Pokemon
 import kotlinx.coroutines.*
-import kotlinx.coroutines.android.awaitFrame
 
 
 class Home : AppCompatActivity() {
@@ -28,10 +27,23 @@ class Home : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val username = intent.getStringExtra("username")
+        val actionBar = supportActionBar
+        actionBar!!.title = "HOME"
+        actionBar.subtitle ="Pokedex-Lite"
+        actionBar.setDisplayHomeAsUpEnabled(true)
+        val username = prefs.getUsername()
         binding.textUsername.text = "Welcome $username"
-        val userId = intent.getStringExtra("userId")
-        getPokemon(userId.toString())
+        val userId = prefs.getUserId()
+        getPokemon(userId)
+        binding.button.setOnClickListener{
+            intent = Intent(this@Home, Add::class.java)
+            startActivity(intent)
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun getPokemon(userId:String){
@@ -48,6 +60,7 @@ class Home : AppCompatActivity() {
                 //Se ejecuta en el hilo principal :)
                 runOnUiThread{
                     initRecyclerView(listPokemon)
+                    proximoId(listPokemon)
                 }
             } catch (e: ClientException) {
                 println("4xx response calling PokemonApi#pokemonGet")
@@ -87,6 +100,12 @@ class Home : AppCompatActivity() {
         intent = Intent(this@Home, Detail::class.java)
         intent.putExtra("pokemon",pokemon)
         startActivity(intent)
+    }
+
+    fun proximoId(lista:List<Pokemon>){
+        var ultimoId = lista.size
+        ultimoId++
+        prefs.saveUltimoId(ultimoId++)
     }
 }
 

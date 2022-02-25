@@ -3,9 +3,7 @@ package com.example.pokedex_lite.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
-import androidx.core.view.isVisible
 import com.example.pokedex_lite.model.StorageApplication.Companion.prefs
 
 import com.example.pokedex_lite.databinding.ActivityMainBinding
@@ -27,7 +25,8 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        val actionBar = supportActionBar
+        actionBar!!.title = "Pokedex-Lite"
         prefs.wipe()
         binding.btnUserUno.setOnClickListener{
             autocomplete("trainer","password")
@@ -36,6 +35,8 @@ class Login : AppCompatActivity() {
             val username:String = binding.textUserName.text.toString()
             val password:String = binding.textPassword.text.toString()
             login(username,password)
+            binding.textUserName.setText("")
+            binding.textPassword.setText("")
         }
     }
 
@@ -55,9 +56,10 @@ class Login : AppCompatActivity() {
                     val result: LoginPostResponse = apiInstanceLogin.loginPOST(user)
                     println(result)
                     if (result != null) {
+                        prefs.saveUserId(result.userId as String)
+                        prefs.saveUsername(result.username as String)
                         intent = Intent(this@Login, Home::class.java)
-                        intent.putExtra("username", result.username as String)
-                        intent.putExtra("userId", result.userId as String)
+                        startActivity(intent)
                     }
                 } catch (e: ClientException) {
                     println("4xx response calling SecurityApi#loginPOST")
@@ -66,7 +68,6 @@ class Login : AppCompatActivity() {
                     println("5xx response calling SecurityApi#loginPOST")
                     e.printStackTrace()
                 }finally {
-                    startActivity(intent)
                     loadingSpinner.isDismiss()
                 }
             }

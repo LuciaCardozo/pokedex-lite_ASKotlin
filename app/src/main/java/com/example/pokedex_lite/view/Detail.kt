@@ -3,7 +3,6 @@ package com.example.pokedex_lite.view
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import com.bumptech.glide.Glide
 import com.example.pokedex_lite.databinding.ActivityDetailBinding
 import com.example.pokedex_lite.model.ImagePokemonProvider
@@ -18,15 +17,25 @@ class Detail : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val arrayAdapter: ArrayAdapter<String>
+        val actionBar = supportActionBar
+        actionBar!!.title = "DETAIL"
+        actionBar.subtitle ="Pokedex-Lite"
+        actionBar.setDisplayHomeAsUpEnabled(true)
+        uploadData()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    private fun uploadData(){
         val types:MutableList<String> = mutableListOf()
-        val listType = binding.lvPokeType
         val pokemon:Pokemon = intent.getSerializableExtra("pokemon") as Pokemon
         for(type in pokemon.type!!){
             types.add(type)
         }
-        arrayAdapter = ArrayAdapter(listType.context,android.R.layout.simple_list_item_1,types)
-        listType.adapter = arrayAdapter
+        binding.tvPokeType.text = "Tipos: ${types.toString().replace("[","").replace("]","")}"
         binding.tvPokeName.text = pokemon.name
         binding.tvPokeLvl.text = "Lvl: ${pokemon.lvl}"
         Glide.with(binding.ivPoke.context).load(ImagePokemonProvider.addImage(pokemon.image.toString())).into(binding.ivPoke)

@@ -16,16 +16,13 @@ class PokemonViewHolder(view:View):RecyclerView.ViewHolder(view){
         var imagePokemon:String = ImagePokemonProvider.addImage(pokemon.image.toString())
         Glide.with(binding.ivPokemon.context).load(imagePokemon).into(binding.ivPokemon)
         binding.tvPokemonName.text = pokemon.name
-        binding.tvPokemonLvl.text = pokemon.lvl.toString()
-        val arrayAdapter:ArrayAdapter<String>
+        var level = pokemon.lvl.toString()
+        binding.tvPokemonLvl.text = "Level: $level"
         val types:MutableList<String> = mutableListOf()
-        val listType = binding.lvTypes
         for(i in pokemon.type!!){
             types.add(i)
         }
-
-        arrayAdapter = ArrayAdapter(listType.context,android.R.layout.simple_list_item_1,types)
-        listType.adapter = arrayAdapter
+        binding.tvTypes.text = "Tipos: ${types.toString().replace("[","").replace("]","")}"
         itemView.setOnClickListener{
             onClickListener(pokemon)
         }

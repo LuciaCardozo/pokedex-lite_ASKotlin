@@ -10,6 +10,7 @@ class Prefs (val context:Context) {
     private val imgEvolution = "imgEvolution"
     private val nameEvolution = "nameEvolution"
     private val lvlEvolution = "lvlEvolution"
+    private val ultimoId = "ultimoId"
 
     private val storage = context.getSharedPreferences(sharedName,0)
 
@@ -49,6 +50,14 @@ class Prefs (val context:Context) {
 
     fun saveLvlEvolution(imgPokemon:String){
         storage.edit().putString(lvlEvolution,imgPokemon).apply()
+    }
+
+    fun saveUltimoId(id:Int){
+        storage.edit().putInt(ultimoId,id).apply()
+    }
+
+    fun getUltimoId():Int{
+        return storage.getInt(ultimoId,0)!!
     }
 
     fun wipe(){

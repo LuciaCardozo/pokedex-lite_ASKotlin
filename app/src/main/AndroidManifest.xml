@@ -14,6 +14,9 @@
         android:theme="@style/Theme.PokedexLite"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.Add"
+            android:exported="false" />
+        <activity
             android:name=".view.SplashActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
@@ -31,8 +34,7 @@
             android:exported="false" />
         <activity
             android:name=".view.Login"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
     </application>
 
 </manifest>

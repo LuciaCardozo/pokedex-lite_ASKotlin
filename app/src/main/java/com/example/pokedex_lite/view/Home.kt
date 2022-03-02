@@ -27,10 +27,6 @@ class Home : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val actionBar = supportActionBar
-        actionBar!!.title = "HOME"
-        actionBar.subtitle ="Pokedex-Lite"
-        actionBar.setDisplayHomeAsUpEnabled(true)
         val username = prefs.getUsername()
         binding.textUsername.text = "Welcome $username"
         val userId = prefs.getUserId()
@@ -39,11 +35,6 @@ class Home : AppCompatActivity() {
             intent = Intent(this@Home, Add::class.java)
             startActivity(intent)
         }
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
     }
 
     private fun getPokemon(userId:String){
@@ -91,7 +82,7 @@ class Home : AppCompatActivity() {
     private fun detailPokemon(pokemon:Pokemon){
         //POKEMON EVOLUTION
         val pokemonEvolution:Pokemon = getPokemonIdEvolution(pokemon.evolutionId,listPokemon)
-        if(pokemonEvolution.name != null){
+        if(pokemonEvolution.name != ""){
             val imageEvolution = ImagePokemonProvider.addImageEvolution(pokemonEvolution.image.toString())
             prefs.saveImgEvolution(imageEvolution)
             prefs.saveNameEvolution(pokemonEvolution.name.toString())

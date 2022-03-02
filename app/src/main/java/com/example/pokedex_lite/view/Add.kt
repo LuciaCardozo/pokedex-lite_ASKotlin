@@ -9,13 +9,16 @@ import android.widget.Toast
 import com.example.pokedex_lite.databinding.ActivityAddBinding
 import com.example.pokedex_lite.model.ImageController
 import com.example.pokedex_lite.model.StorageApplication.Companion.prefs
+import com.google.gson.JsonParser
 import io.swagger.client.apis.PokemonApi
 import io.swagger.client.infrastructure.ClientException
+import io.swagger.client.infrastructure.ResponseType
 import io.swagger.client.infrastructure.ServerException
+import io.swagger.client.models.Pokemon
+import io.swagger.client.models.PokemonAbilities
 import io.swagger.client.models.PokemonBody
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.android.awaitFrame
 
 class Add : AppCompatActivity() {
     private lateinit var binding:ActivityAddBinding
@@ -36,8 +39,6 @@ class Add : AppCompatActivity() {
         }
         binding.btnSave.setOnClickListener{
             addPokemon()
-            intent = Intent(this@Add, Home::class.java)
-            startActivity(intent)
         }
     }
 
@@ -58,46 +59,53 @@ class Add : AppCompatActivity() {
         }
     }
 
-    fun addPokemon(){
+    private fun addPokemon(){
         var id:Int = prefs.getUltimoId()
         var name:String = binding.etName.text.toString()
         var lvl:String = binding.etLevel.text.toString()
         var evolutionId:String = binding.etEvolutionId.text.toString()
         var nameAbility:String = binding.etAbilityName.text.toString()
         var description:String = binding.etAbilityDescription.text.toString()
-        var type = binding.etType.text.toString()
-        var img:String = "img.png"
+        var type:String = binding.etType.text.toString()
+        var img:String = "https://www.certant.com/demo/blog/thumbs/r3.jpg"
         var userId:String =  prefs.getUserId()
 
-        var newPokemon =
-            "{'Pokemon':{'id': $id," +
-                "'name': '$name'," +
-                "'lvl': $lvl," +
-                "'evolutionId':$evolutionId," +
-                "'abilities':[{'name':'$nameAbility'," +
-                "'description':'$description'}]," +
-                "'type':['$type']," +
-                "'image':'$img'}," +
-            "'userId':'$userId'}"
-        
-        println(newPokemon)
+        if(name=="" || lvl=="" || evolutionId=="" || nameAbility=="" || description=="" || type==""){
+            Toast.makeText(this, "PLEASE COMPLETE ALL FIELDS", Toast.LENGTH_SHORT).show()
+        }else{
+            var pokemonAbilities = PokemonAbilities( name = nameAbility, description= description)
+            var poke = Pokemon(
+                id = id,
+                name = name,
+                lvl = lvl.toInt(),
+                evolutionId = evolutionId.toInt(),
+                abilities = arrayOf(pokemonAbilities),
+                type = arrayOf(type),
+                image = img
+            )
+            var newPoke = PokemonBody(pokemon = poke,userId)
+            addPoke(newPoke)
+        }
+
+
     }
 
-    fun addPokemon(newPokemon:PokemonBody){
+    private fun addPoke(newPokemon:PokemonBody?) {
         val apiInstance = PokemonApi()
-        CoroutineScope(Dispatchers.IO).launch {
-            val body : PokemonBody =  newPokemon
+        CoroutineScope(Dispatchers.IO).async {
             try {
-                apiInstance.pokemonPost(body)
+              apiInstance.pokemonPost(newPokemon)
             } catch (e: ClientException) {
                 println("4xx response calling PokemonApi#pokemonPost")
                 e.printStackTrace()
             } catch (e: ServerException) {
                 println("5xx response calling PokemonApi#pokemonPost")
                 e.printStackTrace()
+            } finally {
+                intent = Intent(this@Add, Home::class.java)
+                startActivity(intent)
             }
         }
-
     }
 
 }

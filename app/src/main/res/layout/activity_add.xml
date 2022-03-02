@@ -81,13 +81,13 @@
         app:layout_constraintTop_toBottomOf="@+id/etType" />
 
     <EditText
+        android:inputType="number"
         android:id="@+id/etLevel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:ems="10"
         android:hint="Level"
-        android:inputType="textPersonName"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -113,7 +113,7 @@
         android:layout_margin="10dp"
         android:ems="10"
         android:hint="IdEvolution"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

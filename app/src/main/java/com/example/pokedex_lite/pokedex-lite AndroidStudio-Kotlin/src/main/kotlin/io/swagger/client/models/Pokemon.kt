@@ -25,12 +25,12 @@ import java.io.Serializable
  */
 data class Pokemon (
 
-    val id: Int? = null,
-    val name: String? = null,
-    val lvl: Int? = null,
-    val evolutionId: Int? = null,
-    val abilities: Array<PokemonAbilities>? = null,
-    val type: Array<String>? = null,
-    val image: String? = null
+    var id: Int? = null,
+    var name: String? = null,
+    var lvl: Int? = null,
+    var evolutionId: Int? = null,
+    var abilities: Array<PokemonAbilities>? = null,
+    var type: Array<String>? = null,
+    var image: String? = null
 ):Serializable {
 }

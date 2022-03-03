@@ -1,8 +1,11 @@
 package com.example.pokedex_lite.view
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
 import android.widget.Toast
 import com.example.pokedex_lite.model.StorageApplication.Companion.prefs
 
@@ -74,5 +77,22 @@ class Login : AppCompatActivity() {
         }
     }
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (event.action == KeyEvent.ACTION_DOWN) {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                var alertDialog:AlertDialog.Builder = AlertDialog.Builder(this)
+                alertDialog.setMessage("Do you want to exit the application?")
+                    .setPositiveButton("yes", DialogInterface.OnClickListener() { dialogInterface, i ->
+                        intent = Intent(Intent.ACTION_MAIN)
+                        intent.addCategory(Intent.CATEGORY_HOME)
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                    }).setNegativeButton("no",DialogInterface.OnClickListener() { dialogInterface, i ->
+                        dialogInterface.dismiss()
+                    }).show()
+            }
+        }
+        return true
+    }
 
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.pokedex_lite">
+    package="com.example.pokedex_lite" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,14 +12,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PokedexLite"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true" >
+        <activity
+            android:name=".view.Edit"
+            android:exported="false" />
         <activity
             android:name=".view.Add"
             android:exported="false" />
         <activity
             android:name=".view.SplashActivity"
             android:exported="true"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,7 +37,7 @@
             android:exported="false" />
         <activity
             android:name=".view.Login"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>

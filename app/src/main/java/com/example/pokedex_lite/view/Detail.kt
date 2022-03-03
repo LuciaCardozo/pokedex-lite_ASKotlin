@@ -1,6 +1,7 @@
 package com.example.pokedex_lite.view
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,11 +29,19 @@ class Detail : AppCompatActivity() {
         actionBar!!.title = "DETAIL"
         actionBar.subtitle ="Pokedex-Lite"
         actionBar.setDisplayHomeAsUpEnabled(true)
-        uploadData()
+        val pokemon:Pokemon = intent.getSerializableExtra("pokemon") as Pokemon
+        uploadData(pokemon)
+        binding.btnEdit.setOnClickListener{
+            intent = Intent(this, Edit::class.java)
+            intent.putExtra("pokemon",pokemon)
+            startActivity(intent)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
+        intent = Intent(this, Home::class.java)
+        startActivity(intent)
+        //onBackPressed()
         return true
     }
 
@@ -42,9 +51,8 @@ class Detail : AppCompatActivity() {
         recyclerView.adapter = PokemonAbilityAdapter(list)
     }
 
-    private fun uploadData(){
+    private fun uploadData(pokemon:Pokemon){
         val types:MutableList<String> = mutableListOf()
-        val pokemon:Pokemon = intent.getSerializableExtra("pokemon") as Pokemon
         for(type in pokemon.type!!){
             types.add(type)
         }

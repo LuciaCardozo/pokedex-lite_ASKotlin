@@ -1,9 +1,13 @@
 package com.example.pokedex_lite.view
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokedex_lite.model.StorageApplication.Companion.prefs
@@ -16,7 +20,6 @@ import io.swagger.client.infrastructure.ClientException
 import io.swagger.client.infrastructure.ServerException
 import io.swagger.client.models.Pokemon
 import kotlinx.coroutines.*
-
 
 class Home : AppCompatActivity() {
     private var listPokemon:MutableList<Pokemon> = mutableListOf()
@@ -35,6 +38,23 @@ class Home : AppCompatActivity() {
             intent = Intent(this@Home, Add::class.java)
             startActivity(intent)
         }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if(event.action == KeyEvent.ACTION_DOWN) {
+            if(keyCode == KeyEvent.KEYCODE_BACK) {
+                var alertDialog:AlertDialog.Builder = AlertDialog.Builder(this@Home)
+                alertDialog.setMessage("Do you want to log out?")
+                    .setPositiveButton("yes", DialogInterface.OnClickListener() { dialogInterface, i ->
+                        intent = Intent(this,Login::class.java)
+                        startActivity(intent)
+                    }).setNegativeButton("no",DialogInterface.OnClickListener() { dialogInterface, i ->
+                        dialogInterface.dismiss()
+                    }).show()
+            }
+        }
+
+        return true
     }
 
     private fun getPokemon(userId:String){

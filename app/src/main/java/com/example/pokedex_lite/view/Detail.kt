@@ -8,9 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.pokedex_lite.R
-import com.example.pokedex_lite.adapter.PokemonAbilitiesViewHolder
 import com.example.pokedex_lite.adapter.PokemonAbilityAdapter
-import com.example.pokedex_lite.adapter.PokemonAdapter
 import com.example.pokedex_lite.databinding.ActivityDetailBinding
 import com.example.pokedex_lite.model.ImagePokemonProvider
 import com.example.pokedex_lite.model.StorageApplication.Companion.prefs
@@ -51,17 +49,18 @@ class Detail : AppCompatActivity() {
         recyclerView.adapter = PokemonAbilityAdapter(list)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun uploadData(pokemon:Pokemon){
         val types:MutableList<String> = mutableListOf()
         for(type in pokemon.type!!){
             types.add(type)
         }
-        var pokemonAbilities:MutableList<PokemonAbilities> = mutableListOf()
+        val pokemonAbilities:MutableList<PokemonAbilities> = mutableListOf()
         for (ability in pokemon.abilities!!){
             pokemonAbilities.add(PokemonAbilities(name=ability.name,description=ability.description))
         }
         initRecyclerView(pokemonAbilities)
-        binding.tvPokeType.text = "Tipos: ${types.toString().replace("[","").replace("]","")}"
+        binding.tvPokeType.text = "Types: ${types.toString().replace("[","").replace("]","")}"
         binding.tvPokeName.text = pokemon.name
         binding.tvPokeLvl.text = "Lvl: ${pokemon.lvl}"
         Glide.with(binding.ivPoke.context).load(ImagePokemonProvider.addImage(pokemon.image.toString())).into(binding.ivPoke)
@@ -72,9 +71,9 @@ class Detail : AppCompatActivity() {
     private fun getEvolution(id:String){
         if(id != "null"){
             if(id != "0"){
-                var imgEvolution = prefs.getImgEvolution()
-                var nameEvolution = prefs.getNameEvolution()
-                var lvlEvolution = "Lvl: ${prefs.getLvlEvolution()}"
+                val imgEvolution = prefs.getImgEvolution()
+                val nameEvolution = prefs.getNameEvolution()
+                val lvlEvolution = "Lvl: ${prefs.getLvlEvolution()}"
                 if(nameEvolution == "null"){
                     binding.txtEvolution.text = "NO EVOLUTION DETAILS"
                 }else{

@@ -3,10 +3,8 @@ package com.example.pokedex_lite.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import com.example.pokedex_lite.R
 import com.example.pokedex_lite.databinding.ActivityEditBinding
 import io.swagger.client.apis.PokemonApi
 import io.swagger.client.infrastructure.ClientException
@@ -28,7 +26,7 @@ class Edit : AppCompatActivity() {
         actionBar!!.title = "EDIT"
         actionBar.subtitle ="Pokedex-Lite"
         actionBar.setDisplayHomeAsUpEnabled(true)
-        var pokemon: Pokemon = intent.getSerializableExtra("pokemon") as Pokemon
+        val pokemon: Pokemon = intent.getSerializableExtra("pokemon") as Pokemon
         seeEdit(pokemon)
         binding.btedit.setOnClickListener{
             uploadData(pokemon)
@@ -52,25 +50,25 @@ class Edit : AppCompatActivity() {
         uploadListType(pokemon)
     }
 
-    fun uploadListType(pokemon:Pokemon) {
-        var listViewType = binding.lvTypes
-        var arrayAdapter:ArrayAdapter<*>
-        var types:MutableList<String> = mutableListOf()
+    private fun uploadListType(pokemon:Pokemon) {
+        val listViewType = binding.lvTypes
+        val arrayAdapter:ArrayAdapter<*>
+        val types:MutableList<String> = mutableListOf()
         for (type in pokemon.type!!) {
             types.add(type)
         }
         arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, types)
         listViewType.adapter = arrayAdapter
-        listViewType.setOnItemClickListener(){ parent,view,position,id->
+        listViewType.setOnItemClickListener { parent, _, position, _ ->
             binding.edType.setText(parent.getItemAtPosition(position).toString())
         }
     }
 
     private fun uploadData(pokemon:Pokemon) {
-        var name = binding.editName.text.toString()
-        var nameAbility = binding.edNameAbility.text.toString()
-        var description   = binding.edDescription.text.toString()
-        var idEvolution = binding.edIdEvolution.text.toString()
+        val name = binding.editName.text.toString()
+        val nameAbility = binding.edNameAbility.text.toString()
+        val description   = binding.edDescription.text.toString()
+        val idEvolution = binding.edIdEvolution.text.toString()
         if(name != "" || nameAbility != "" || description != "" || idEvolution != ""){
             pokemon.name = if(name=="") pokemon.name else name
             pokemon.type = pokemon.type
@@ -80,14 +78,14 @@ class Edit : AppCompatActivity() {
             pokemon.lvl = pokemon.lvl
             pokemon.image = pokemon.image
         }else{
-            Toast.makeText(this, "No se realizo ningun cambio", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "No change was made", Toast.LENGTH_SHORT).show()
         }
         println(pokemon)
         editPokemon(pokemon)
     }
 
     private fun addAbility(pokemon:Pokemon, name:String, description:String):Array<PokemonAbilities> {
-        var pokeAux:PokemonAbilities
+        val pokeAux:PokemonAbilities
 
         if (name != "" && description != "") {
             pokeAux = PokemonAbilities(name=name, description=description)
@@ -118,32 +116,32 @@ class Edit : AppCompatActivity() {
     }
 
     private fun addType(pokemon:Pokemon){
-        var type = binding.edType.text.toString()
+        val type = binding.edType.text.toString()
         if(type!="") {
-            var exist = pokemon.type!!.indexOf(type)
+            val exist = pokemon.type!!.indexOf(type)
             if(exist < 0) {
                 pokemon.type = pokemon.type!!.concat(type)
                 uploadListType(pokemon)
                 binding.edType.setText("")
             } else {
-                Toast.makeText(this, "Ya existe el tipo $type", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "It already exists $type", Toast.LENGTH_SHORT).show()
                 binding.edType.setText("")
             }
         }
     }
 
     private fun removeType(pokemon:Pokemon) {
-        var auxList:MutableList<String> = mutableListOf()
-        var type = binding.edType.text.toString()
+        val auxList:MutableList<String> = mutableListOf()
+        val type = binding.edType.text.toString()
         if(type != "") {
-            var exist = pokemon.type!!.indexOf(type)
+            val exist = pokemon.type!!.indexOf(type)
             if(exist>-1) {
                 for (pokeType in pokemon.type!!) {
                     if(pokeType != type) {
                         auxList.add(pokeType)
                     }
                 }
-                var poke: Array<String> = auxList.toTypedArray()
+                val poke: Array<String> = auxList.toTypedArray()
                 pokemon.type = poke
                 binding.edType.setText("")
             } else {

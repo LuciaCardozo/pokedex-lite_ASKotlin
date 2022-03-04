@@ -16,10 +16,10 @@
         <entry key="..\:/Users/lcardozo/AndroidStudioProjects/pokedex/app/src/main/res/drawable/rounded_corner_view.xml" value="0.134" />
         <entry key="..\:/Users/lcardozo/AndroidStudioProjects/pokedex/app/src/main/res/drawable/splash_pokemon.xml" value="0.2105" />
         <entry key="..\:/Users/lcardozo/AndroidStudioProjects/pokedex/app/src/main/res/layout/activity_add.xml" value="0.264" />
-        <entry key="..\:/Users/lcardozo/AndroidStudioProjects/pokedex/app/src/main/res/layout/activity_detail.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/lcardozo/AndroidStudioProjects/pokedex/app/src/main/res/layout/activity_detail.xml" value="0.264" />
         <entry key="..\:/Users/lcardozo/AndroidStudioProjects/pokedex/app/src/main/res/layout/activity_edit.xml" value="0.264" />
         <entry key="..\:/Users/lcardozo/AndroidStudioProjects/pokedex/app/src/main/res/layout/activity_home.xml" value="0.264" />
-        <entry key="..\:/Users/lcardozo/AndroidStudioProjects/pokedex/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/lcardozo/AndroidStudioProjects/pokedex/app/src/main/res/layout/activity_main.xml" value="0.4" />
         <entry key="..\:/Users/lcardozo/AndroidStudioProjects/pokedex/app/src/main/res/layout/item_pokemon.xml" value="0.264" />
         <entry key="..\:/Users/lcardozo/AndroidStudioProjects/pokedex/app/src/main/res/layout/item_pokemon_ability.xml" value="0.264" />
         <entry key="..\:/Users/lcardozo/AndroidStudioProjects/pokedex/app/src/main/res/layout/progress_bar_loading.xml" value="0.2" />
@@ -31,5 +31,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.4" />
+      </ProjectState>
+    </option>
   </component>
 </project>

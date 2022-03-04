@@ -1,5 +1,6 @@
 package com.example.pokedex_lite.view
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -32,7 +33,7 @@ class Login : AppCompatActivity() {
         actionBar!!.title = "Pokedex-Lite"
         prefs.wipe()
         binding.btnUserUno.setOnClickListener{
-            autocomplete("trainer","password")
+            autocomplete()
         }
         binding.buttonLogin.setOnClickListener{
             val username:String = binding.textUserName.text.toString()
@@ -43,9 +44,10 @@ class Login : AppCompatActivity() {
         }
     }
 
-    private fun autocomplete(name:String,password:String){
-        binding.textUserName.setText(name)
-        binding.textPassword.setText(password)
+    @SuppressLint("SetTextI18n")
+    private fun autocomplete(){
+        binding.textUserName.setText("trainer")
+        binding.textPassword.setText("password")
     }
 
     private fun login(username:String,password: String){
@@ -80,14 +82,14 @@ class Login : AppCompatActivity() {
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (event.action == KeyEvent.ACTION_DOWN) {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
-                var alertDialog:AlertDialog.Builder = AlertDialog.Builder(this)
+                val alertDialog:AlertDialog.Builder = AlertDialog.Builder(this)
                 alertDialog.setMessage("Do you want to exit the application?")
-                    .setPositiveButton("yes", DialogInterface.OnClickListener() { dialogInterface, i ->
+                    .setPositiveButton("yes", DialogInterface.OnClickListener { _, _ ->
                         intent = Intent(Intent.ACTION_MAIN)
                         intent.addCategory(Intent.CATEGORY_HOME)
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         startActivity(intent)
-                    }).setNegativeButton("no",DialogInterface.OnClickListener() { dialogInterface, i ->
+                    }).setNegativeButton("no",DialogInterface.OnClickListener { dialogInterface, _ ->
                         dialogInterface.dismiss()
                     }).show()
             }

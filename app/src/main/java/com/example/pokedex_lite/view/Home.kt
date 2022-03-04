@@ -1,22 +1,16 @@
 package com.example.pokedex_lite.view
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.hardware.input.InputManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.View
-import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokedex_lite.model.StorageApplication.Companion.prefs
@@ -54,12 +48,12 @@ class Home : AppCompatActivity(), SearchView.OnQueryTextListener {
     }
 
     private fun logout(){
-        var alertDialog:AlertDialog.Builder = AlertDialog.Builder(this@Home)
+        val alertDialog:AlertDialog.Builder = AlertDialog.Builder(this@Home)
         alertDialog.setMessage("Do you want to log out?")
-            .setPositiveButton("yes", DialogInterface.OnClickListener() { dialogInterface, i ->
+            .setPositiveButton("yes", DialogInterface.OnClickListener { _, _ ->
                 intent = Intent(this,Login::class.java)
                 startActivity(intent)
-            }).setNegativeButton("no",DialogInterface.OnClickListener() { dialogInterface, i ->
+            }).setNegativeButton("no",DialogInterface.OnClickListener { dialogInterface, _ ->
                 dialogInterface.dismiss()
             }).show()
     }
@@ -130,11 +124,11 @@ class Home : AppCompatActivity(), SearchView.OnQueryTextListener {
     private fun nextId(list:List<Pokemon>) {
         var ultimoId = list.size
         ultimoId++
-        prefs.saveUltimoId(ultimoId++)
+        prefs.saveUltimoId(ultimoId)
     }
 
     private fun searchByName(query:String) {
-        var newList = listPokemon.filter { it.name?.contains(query,ignoreCase = true) ?: null!! }
+        val newList = listPokemon.filter { it.name?.contains(query,ignoreCase = true) ?: null!! }
         initRecyclerView(newList)
     }
 

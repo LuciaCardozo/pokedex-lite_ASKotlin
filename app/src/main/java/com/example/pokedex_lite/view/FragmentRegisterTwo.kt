@@ -10,7 +10,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.FragmentResultListener
+import androidx.lifecycle.ViewModelProvider
 import com.example.pokedex_lite.R
+import com.example.pokedex_lite.model.FragmentRegisterVM
 import io.swagger.client.apis.UserApi
 import io.swagger.client.infrastructure.ClientException
 import io.swagger.client.infrastructure.ServerException
@@ -31,11 +33,13 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class FragmentRegisterTwo : Fragment() {
-
     private lateinit var vista:View
-
+    private lateinit var name:String
+    private lateinit var lastname:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //name = viewModel.name
+        //lastname = viewModel.lastname
     }
 
     override fun onCreateView(
@@ -54,19 +58,16 @@ class FragmentRegisterTwo : Fragment() {
     }
 
     private fun stepTwo() {
+        var viewModel:FragmentRegisterVM = activity?.let { ViewModelProvider(it).get(FragmentRegisterVM::class.java) }!!
         val username = vista.findViewById<EditText>(R.id.username).text.toString()
         val password = vista.findViewById<EditText>(R.id.password).text.toString()
         val role = vista.findViewById<EditText>(R.id.role).text.toString()
         if (username.isNullOrEmpty() || password.isNullOrEmpty() || role.isNullOrEmpty()) {
             Toast.makeText(activity, "Please, complete all fields", Toast.LENGTH_SHORT).show()
         } else {
-            parentFragmentManager.setFragmentResultListener("key",this, FragmentResultListener(){ _, bundle->
-                var name = bundle.getString("name")
-                var lastname = bundle.getString("lastname")
-                var auxRole:Array<String> = arrayOf(role)
-                var newUser = UserPostRequest(auxRole,name,lastname,username,password)
-                addUser(newUser)
-            })
+            var auxRole:Array<String> = arrayOf(role)
+            var newUser = UserPostRequest(auxRole,viewModel.name,viewModel.lastname,username,password)
+            addUser(newUser)
         }
     }
     
@@ -76,7 +77,6 @@ class FragmentRegisterTwo : Fragment() {
             try {
                 val result : User = apiInstance.userPost(user)
                 println(result)
-                Toast.makeText(activity, "Added user ", Toast.LENGTH_SHORT).show()
             } catch (e: ClientException) {
                 println("4xx response calling UserApi#userPost")
                 e.printStackTrace()

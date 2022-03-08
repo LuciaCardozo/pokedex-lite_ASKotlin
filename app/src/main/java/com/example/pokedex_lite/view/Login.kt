@@ -42,6 +42,10 @@ class Login : AppCompatActivity() {
             binding.textUserName.setText("")
             binding.textPassword.setText("")
         }
+        binding.buttonRegister.setOnClickListener {
+            intent = Intent(this@Login, Register::class.java)
+            startActivity(intent)
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -51,10 +55,11 @@ class Login : AppCompatActivity() {
     }
 
     private fun login(username:String,password: String){
-        loadingSpinner.startLoading()
+
         if (username == "" || password == ""){
             Toast.makeText(this, "Por favor complete los campos", Toast.LENGTH_SHORT).show()
         }else{
+            loadingSpinner.startLoading()
             CoroutineScope(Dispatchers.IO).launch {
             val user = LoginBody(username = username,password = password)
                 try {

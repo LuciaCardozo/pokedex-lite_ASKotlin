@@ -2,10 +2,10 @@
 <layer-list android:opacity="opaque"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/orage"/>
-    <item android:left="30dp"
-        android:right="30dp"
-        android:top="260dp"
-        android:bottom="260dp">
+    <item android:left="50dp"
+        android:right="50dp"
+        android:top="150dp"
+        android:bottom="150dp">
         <bitmap android:src="@drawable/pokemones"/>
     </item>
 </layer-list>

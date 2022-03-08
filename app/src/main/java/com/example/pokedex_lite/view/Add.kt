@@ -65,9 +65,9 @@ class Add : AppCompatActivity() {
         val img = "https://www.certant.com/demo/blog/thumbs/r3.jpg"
         val userId:String =  prefs.getUserId()
 
-        if(name=="" || lvl=="" || evolutionId=="" || nameAbility=="" || description=="" || type==""){
+        if (name=="" || lvl=="" || evolutionId=="" || nameAbility=="" || description=="" || type=="") {
             Toast.makeText(this, "PLEASE COMPLETE ALL FIELDS", Toast.LENGTH_SHORT).show()
-        }else{
+        } else {
             val pokemonAbilities = PokemonAbilities( name = nameAbility, description= description)
             val poke = Pokemon(
                 id = id,
@@ -100,5 +100,4 @@ class Add : AppCompatActivity() {
             }
         }
     }
-
 }
